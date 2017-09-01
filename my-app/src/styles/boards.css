@@ -1,0 +1,200 @@
+body {
+    margin: 0px;
+    padding: 0px;   
+}
+
+#taskbar {
+    height:40px;
+    width: 100%;
+    background-color: #026AA7;
+}
+
+#mainbody {
+    height:500px;
+    margin:15px;
+}
+
+#leftTaskBarList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    float: left;
+}
+
+#rightTaskBarList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#rightTaskBarList li {
+    float:right;
+    display: inline;
+}
+
+button {
+    height: 30px;
+    width: 30px;
+    margin: 4px;
+    padding: 1px;
+    background-color: #3a8db7;
+    color: #ffffff;
+    font-family: "jaf-facitweb","Helvetica Neue",Arial,sans-serif;
+    font-size:14px;
+    font-weight: bold;
+    border: 1px none #3a8db7;
+    cursor: hand;
+    border-radius: 4px;                
+}
+
+#firstButton {
+    background-color: #d6dadc;   
+    color: #4d4d4d;
+}
+
+#boardTaskBar {
+    width: 85px;
+}
+
+#boardTaskBar img{
+    float:left;
+    margin-left: 4px;
+}
+
+button img{
+    height:20px;
+    width:20px;
+}
+
+#logout-btn {
+    width:100px;
+}
+
+#welcome {
+    float: left;
+}
+
+#welcome h1{
+    font-weight: bold;
+    color: #4d4d4d;
+    font-family: "jaf-facitweb","Helvetica Neue",Arial,sans-serif;
+}
+
+#add-board-dropdown-div {
+    position: relative;
+    float: right;
+}
+
+#add-new-board-btn {
+    margin: 10px;
+    height: 35px;
+    width: 120px;
+    background-color: #D6DADC;
+    color: #4d4d4d;
+    font-size: 14px;
+    font-weight: bold;
+    float: right;
+    border: 1px none #8c8c8c;
+    border-radius: 4px;
+    box-shadow: 0 1px #cccccc;
+    cursor: hand;
+}
+
+#add-new-board-btn:hover {
+    border-radius: 4px;
+    color: #ffffff;
+    background-color: #2591c5;
+    box-shadow: 0 1px #006ca2;
+}
+
+.board-dropdown-content {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 5px;
+    background-color: #f9f9f9;
+    width: 250px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 4px;
+}
+
+#board-form {
+    display: block;
+    margin-top: 0em;
+}
+
+.board-dropdown-content input[type=text] {
+    height: 40px;
+    width: 240px;
+    padding: 5px;
+    margin: 5px;
+    background-color: #fafec5;
+    border-radius: 4px;
+    border: 1px solid #4D4D4D;
+    font-size: 15px;
+}
+
+#board-submit-btn {
+    height: 35px;
+    width: 120px;
+    margin:5px;
+    background-color: #5cb85d;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    float: right;
+    display:inline;
+    border: 1px none #437535;
+    border-radius: 4px;
+    box-shadow: 0 1px #437535;
+    cursor: hand; 
+}
+
+#personalBoards {
+    width: 200px;
+}
+
+#personalBoards h3 {
+    display: inline;
+    margin-left: 5px;
+    font-family: "jaf-facitweb","Helvetica Neue",Arial,sans-serif;
+    font-weight: bold;
+    color: #4d4d4d;
+}
+
+#personalBoards img {
+    height:20px;
+    width:20px;
+    float:left;
+    margin-left: 5px;
+}
+
+#boardsList ul {
+    padding-left: 0;
+}
+
+#boardsList li {
+    list-style-type: none; 
+    display: inline;
+}
+
+#boardsList button {
+    width:250px;
+    height:90px;
+    margin:10px 5px;
+}
+
+.board {
+    background-image: url(../images/abstract-mosaic-background.png);
+    background-size:cover;
+}
+
+.board:hover {
+    opacity: 0.7;
+}
+
+a {
+    text-decoration: none;
+}
