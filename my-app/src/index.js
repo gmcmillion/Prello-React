@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 
 import CreateAccount from './components/create_account';
 import Boards from './components/boards';
@@ -10,8 +15,8 @@ class App extends Component {
     return (
       <div>
         {/* <CreateAccount /> */}
-        <Boards />
-        {/* <Board /> */}
+        {/* <Boards /> */}
+        <Board />
       </div>
     );
   }
