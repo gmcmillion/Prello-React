@@ -4,7 +4,7 @@ class ShowMenu extends Component {
   render() {		
     return (
       <div id="board-header">
-        <p id="boardName">[INSERT NAME]</p>
+        <p id="boardName">[INSERT BOARD NAME]</p>
         
         <button type="button" id="show-menu-btn">Show Menu</button>
         <div id="mySidenav" className="sidenav">
@@ -19,6 +19,7 @@ class ShowMenu extends Component {
             </div>
           <a href="">Activity</a>
         </div> 
+
         <div id="pos-list-dropdown">
           <button type="button" id="addNewListBtn">Add New List</button>
           <div id="add-list-dropdown" className="list-dropdown-content">
@@ -28,6 +29,7 @@ class ShowMenu extends Component {
             </form>
           </div>
         </div>
+
       </div>
     );
   }
