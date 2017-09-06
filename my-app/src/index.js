@@ -5,8 +5,6 @@ import CreateAccount from './components/create_account';
 import Boards from './components/boards';
 import Board from './components/board';
 
-// Connect to db
-
 class App extends Component {
   render() {
     return (
