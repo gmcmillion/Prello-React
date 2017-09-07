@@ -14,7 +14,17 @@ p {
   font-family: "jaf-facitweb","Helvetica Neue",Arial,sans-serif;
 }
 
+label {
+  display: block;
+  margin: 20px 0px 20px 0px;
+  font-size: 20px;
+  color:#4D4D4D;
+  font-family: "jaf-facitweb","Helvetica Neue",Arial,sans-serif;
+}
+
 input[type=text], input[type=email], input[type=password] {
+  display: block;
+  margin: 20px 0px 20px 0px;
   height: 50px;
   width: 400px;
   padding: 10px;

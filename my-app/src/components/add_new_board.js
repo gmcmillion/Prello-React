@@ -4,9 +4,9 @@ class AddBoard extends Component {
   render() {		
     return (
       <div id="add-board-dropdown-div">
-        <button type="button" id="add-new-board-btn">Add New Board</button>
-        
+
         {/* Dropdown */}
+        <button type="button" id="add-new-board-btn">Add New Board</button>
         <div id="board-dropdown" className="board-dropdown-content">
           <form id="board-form">
             <input type="text" id="name" name="name" autoComplete="off" placeholder="Add a Board..."/>
