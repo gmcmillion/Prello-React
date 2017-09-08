@@ -43,7 +43,7 @@ button {
     font-size:14px;
     font-weight: bold;
     border: 1px none #3a8db7;
-    cursor: hand;
+    cursor: pointer;
     border-radius: 4px;                
 }
 
@@ -97,7 +97,7 @@ button img{
     border: 1px none #8c8c8c;
     border-radius: 4px;
     box-shadow: 0 1px #cccccc;
-    cursor: hand;
+    cursor: pointer;
 }
 
 #add-new-board-btn:hover {
@@ -149,7 +149,7 @@ button img{
     border: 1px none #437535;
     border-radius: 4px;
     box-shadow: 0 1px #437535;
-    cursor: hand; 
+    cursor: pointer; 
 }
 
 #personalBoards {
@@ -198,26 +198,8 @@ button img{
 a {
     text-decoration: none;
 }
-
-.menu-enter {
-    max-height: 0px;
-    -webkit-transition: max-height 100ms ease-in-out;
-    overflow: hidden;
-  }
   
-  .menu-enter.menu-enter-active {
+.menu-enter.menu-enter-active {
     height: auto;
     max-height: 100px;
-  }
-  
-  .menu-leave {
-    max-height: 100px;
-    -webkit-transition: max-height 100ms ease-in-out;
-  }
-  
-  .menu-leave.menu-leave-active {
-    overflow: hidden;
-    max-height: 0px;
-  }
-  
-  
+}  
