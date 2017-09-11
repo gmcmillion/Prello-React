@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import $ from 'jquery'; 
 
 class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: '',
       username: '',
       email: '',
       password: '',
@@ -25,12 +27,21 @@ class Register extends Component {
   }
 
   handleSubmit(event) {
-    alert('USERNAME: ' + this.state.username 
-      + ' EMAIL: '+ this.state.email
-      + ' PASSWORD: '+ this.state.password
-      + ' CONFIRM PASSWORD: '+ this.state.confirmPassword
-    );
     event.preventDefault();
+    
+    var post_url = "http://localhost:3000/users/register";
+    $.ajax({
+      url: post_url,
+      type: "POST",
+      dataType: 'json',
+      data: {
+        username: this.state.username,
+        password: this.state.password,
+        email: this.state.email
+      }
+    }).done(function(response) {  
+      window.location.href = `/boards/${response.id}`;
+    });
   }
 
   render() {		
