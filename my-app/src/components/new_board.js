@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 class NewBoard extends Component {
   render() {
     return (
-      // TODO: Populate all boards from a database
-      <Link to="/board">
-        <li>
-          <button className="board" type="button">[NEW BOARD NAME]</button>
-        </li>
-      </Link>
+      // TODO: Fix link for appropriate board display
+      <li>
+        <Link to="/board">
+          <button className="board" type="button"> { this.props.boardname } </button>
+        </Link>
+      </li>
     );
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { CSSTransitionGroup } from 'react-transition-group';
 import $ from 'jquery'; 
+import NewBoard from './new_board';
 
 class AddBoard extends Component {
   constructor(props) {
@@ -28,22 +29,31 @@ class AddBoard extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    var post_url = "http://localhost:3000/boards/newboard"
-    
+    this.toggleMenu();
+
+    //Post new board
+    var post_url = "http://localhost:3000/boards/newboard" 
+    var self = this;   
     $.post(post_url, {
         name: this.state.value,
         userid: this.props.authorid,
         username: this.props.username
     }).done(function(response) {
-      console.log(response);
+      self.props.action(response);   //Update parent state with response
     });
+
+    this.resetForm();
+  }
+
+  resetForm = () => { 
+    this.setState({ value: "" });
   }
 
   render() {
     let menu;
     if(this.state.menuActive) {
       menu = <div id="add-board-dropdown-div">
-                <div id="board-dropdown" className="board-dropdown-content" onSubmit={this.handleSubmit}>
+                <div id="board-dropdown" className="board-dropdown-content">
                   <form id="board-form" onSubmit={this.handleSubmit}>
                     <input type="text" value={this.state.value} onChange={this.handleChange} id="name" name="name" autoComplete="off" placeholder="Add a Board..."/>
                     <button id="board-submit-btn" type="submit">Submit</button>
