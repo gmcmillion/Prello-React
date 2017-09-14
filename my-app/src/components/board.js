@@ -7,11 +7,18 @@ import ShowMenu from './show_menu';
 import Lists from './lists';
 
 class Board extends Component {
-  render() {		
+  constructor(props) {
+    super(props);
+    this.state = {
+      lists: []
+    }
+  }
+
+  render() {	
     return (
       <div id="body">
         <Header />
-        <ShowMenu />
+        <ShowMenu boardid={this.props.match.params.bid}/>
         <Lists />
         <CardModal />  
         <AddCard />

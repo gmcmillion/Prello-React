@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 
 class Login extends Component {
-  
-
-
-
   constructor(props) {
     super(props);
     this.state = {
@@ -27,8 +23,27 @@ class Login extends Component {
   }
 
   handleSubmit(event) {
-    alert('USERNAME: ' + this.state.username + ' PASSWORD: '+ this.state.password);
     event.preventDefault();
+
+    fetch('http://localhost:3000/users/login', {
+      credentials: 'include',
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password,
+      })
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      window.location.href = `/boards/${responseJson.id}`;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   }
 
   render() {		

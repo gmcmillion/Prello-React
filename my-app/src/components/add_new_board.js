@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { CSSTransitionGroup } from 'react-transition-group';
-import $ from 'jquery'; 
-import NewBoard from './new_board';
 
 class AddBoard extends Component {
   constructor(props) {
@@ -32,21 +30,31 @@ class AddBoard extends Component {
     this.toggleMenu();
 
     //Post new board
-    var post_url = "http://localhost:3000/boards/newboard" 
-    var self = this;   
-    $.post(post_url, {
+    let that = this;
+    fetch('http://localhost:3000/boards/newboard', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         name: this.state.value,
         userid: this.props.authorid,
         username: this.props.username
-    }).done(function(response) {
-      self.props.action(response);   //Update parent state with response
+      })
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      that.props.action(responseJson);   //Update parent state with response
+    })
+    .catch((error) => {
+      console.error(error);
     });
-
     this.resetForm();
   }
 
   resetForm = () => { 
-    this.setState({ value: "" });
+    this.setState({ value: '' });
   }
 
   render() {
@@ -63,7 +71,6 @@ class AddBoard extends Component {
     } else {
       menu = "";
     }
-
     return (
       <div id = "menu">
         <button type="button" id="add-new-board-btn" onClick = { this.toggleMenu }>Add New Board</button>

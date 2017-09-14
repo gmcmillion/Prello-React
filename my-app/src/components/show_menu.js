@@ -1,7 +1,75 @@
 import React, { Component } from 'react';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 class ShowMenu extends Component {
-  render() {		
+  constructor(props) {
+    super(props);
+    this.state = {
+      addListMenuActive: false,
+      listValue: ''
+    };
+
+    this.toggleMenu = this.toggleMenu.bind(this);
+    this.handleListChange = this.handleListChange.bind(this);
+    this.handleListSubmit = this.handleListSubmit.bind(this);
+  }
+
+  toggleMenu() {
+    let menuState = !this.state.addListMenuActive;
+    this.setState({
+      addListMenuActive: menuState
+    });
+  }
+
+  handleListChange(event) {
+    this.setState({listValue: event.target.value});
+  }
+
+  handleListSubmit(event) {
+    event.preventDefault();
+    this.toggleMenu();
+
+    //Post new list
+    // let that = this;
+    fetch('http://localhost:3000/board/newlist', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        listName: this.state.listValue,
+        boardid: this.props.boardid
+      })
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log(responseJson);
+    
+      // that.props.action(responseJson);   //Update parent state with response
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+    this.resetForm();
+  }
+
+  resetForm = () => { 
+    this.setState({ value: '' });
+  }
+
+  render() {	
+    let listMenu;
+    if(this.state.addListMenuActive) {
+      listMenu = <div id="add-list-dropdown" className="list-dropdown-content">
+                    <form id="list-submit-btn-form" onSubmit={this.handleListSubmit}>
+                      <input onChange={this.handleListChange} type="text" id="newListInput" autoComplete="off" placeholder="Add a list..."/>
+                      <input type="submit"/>
+                    </form>
+                  </div>
+    } else {
+      listMenu = "";
+    }
     return (
       <div id="board-header">
         <p id="boardName">[INSERT BOARD NAME]</p>
@@ -19,15 +87,12 @@ class ShowMenu extends Component {
             </div>
           <a href="">Activity</a>
         </div> 
-
+        {/* Add new list dropdown */}
         <div id="pos-list-dropdown">
-          <button type="button" id="addNewListBtn">Add New List</button>
-          <div id="add-list-dropdown" className="list-dropdown-content">
-            <form id="list-submit-btn-form">
-              <input type="text" id="newListInput" autoComplete="off" placeholder="Add a list..."/>
-              <input type="submit"/>
-            </form>
-          </div>
+          <button type="button" id="addNewListBtn" onClick = { this.toggleMenu }>Add New List</button>
+          <CSSTransitionGroup transitionName = "listMenu" transitionEnterTimeout={1} transitionLeaveTimeout={1}>
+            {listMenu}
+          </CSSTransitionGroup>
         </div>
 
       </div>

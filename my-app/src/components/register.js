@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import $ from 'jquery'; 
 
 class Register extends Component {
   constructor(props) {
@@ -28,19 +27,25 @@ class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    
-    var post_url = "http://localhost:3000/users/register";
-    $.ajax({
-      url: post_url,
-      type: "POST",
-      dataType: 'json',
-      data: {
+
+    fetch('http://localhost:3000/users/register', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         username: this.state.username,
         password: this.state.password,
         email: this.state.email
-      }
-    }).done(function(response) {  
-      window.location.href = `/boards/${response.id}`;
+      })
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      window.location.href = `/boards/${responseJson.id}`;
+    })
+    .catch((error) => {
+      console.error(error);
     });
   }
 

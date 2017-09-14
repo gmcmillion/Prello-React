@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../styles/boards.css';
-import $ from 'jquery'; 
 import Header from './header';
 import AddBoard from './add_new_board';
 import NewBoard from './new_board';
@@ -19,17 +18,22 @@ class Boards extends Component {
 
   //Get all boards when components mounts
   componentDidMount() {
-    var post_url = "http://localhost:3000/boards/listofboards";
-    var self = this;
-    $.ajax({
-      url: post_url,
-      type: "GET",
-      dataType: 'json',
-    }).done(function(response) {  
-      console.log(response);
-      self.setState({ boards: response });  
+    var that = this;
+    fetch('http://localhost:3000/boards/listofboards', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      that.setState({ boards: responseJson }); 
+    })
+    .catch((error) => {
+      console.error(error);
     });
-  };
+  }
 
   //To update state when child component adds a new board
   boardHandler(response) {
@@ -58,6 +62,7 @@ class Boards extends Component {
                   this.state.boards.map((board) =>
                     <NewBoard 
                       key={board.id} 
+                      boardid={board.id}
                       boardname={board.boardname}/>
                     )
                 }

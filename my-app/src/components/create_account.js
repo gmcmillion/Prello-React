@@ -4,7 +4,7 @@ import Login from './login';
 import '../styles/create_account.css';
 
 class CreateAccount extends Component {
-  render() {		
+  render() {	
     return (
       <div id="reg-login-wrapper">
         <Register />

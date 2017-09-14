@@ -32,4 +32,13 @@ router.post('/newboard', function(req, res) {
   });
 });
 
+//Check if user is logged in, otherwise redirect to login page
+function requireLogin (req, res, next) {
+	if (!req.user) {
+		res.redirect('/');
+	} else {
+		next();
+	}
+};
+
 module.exports = router;
