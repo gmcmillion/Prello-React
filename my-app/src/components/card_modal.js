@@ -1,13 +1,49 @@
 import React, { Component } from 'react';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 class CardModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      labelDropdownActive: false
+    };
+
+    this.toggleLabelDropdown = this.toggleLabelDropdown.bind(this);
+    this.handleClose = this.handleClose.bind(this);    
+  }
+
+  toggleLabelDropdown() {
+    let menuState = !this.state.labelDropdownActive;
+    this.setState({
+      labelDropdownActive: menuState
+    });
+  }
+
+  handleClose() {
+    this.props.action();
+  }
+
   render() {		
+    let labelDropdown;
+    if(this.state.labelDropdownActive) {
+      labelDropdown = <div id="labeldropdown" className="label-dropdown-content">
+                        <button id="green"></button>
+                        <button id="yellow"></button>
+                        <button id="orange"></button>
+                        <button id="red"></button>
+                        <button id="purple"></button>
+                        <button id="blue"></button>
+                      </div>
+    } else {
+      labelDropdown = "";
+    }
+
     return (
-        <div id="myModal" className="modal">
+      <div id="myModal" className="modal">
         <div className="modal-content">
           <div className="card-left-side">
             <div id="card-name">
-              <p>This is the card name (make editable)</p>
+              <p>{this.props.cardName}</p>
             </div>
             <div>
               <h3 id="description">Edit the description...</h3>
@@ -33,18 +69,13 @@ class CardModal extends Component {
             </div> 
           </div>
           <div className="card-right-side">
-            <span className="close">&times;</span>
+          <button type="button" className="close" onClick={this.handleClose}>&times;</button>
             <div>
               <button type="button" id="delete-card-btn">Delete Card</button>
-              <button type="button" id="label-btn">Labels</button>
-              <div id="labeldropdown" className="label-dropdown-content">
-                <button id="green"></button>
-                <button id="yellow"></button>
-                <button id="orange"></button>
-                <button id="red"></button>
-                <button id="purple"></button>
-                <button id="blue"></button>
-              </div>
+              <button type="button" id="label-btn" onClick = { this.toggleLabelDropdown }>Labels</button>
+              <CSSTransitionGroup transitionName = "labelDropDown" transitionEnterTimeout={1} transitionLeaveTimeout={1}>
+                {labelDropdown}
+              </CSSTransitionGroup>
             </div>
           </div>
         </div>

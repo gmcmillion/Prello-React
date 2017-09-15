@@ -3,6 +3,7 @@ import '../styles/boards.css';
 import Header from './header';
 import AddBoard from './add_new_board';
 import NewBoard from './new_board';
+/* eslint-disable */
 
 class Boards extends Component {
   constructor(props) {
@@ -28,7 +29,9 @@ class Boards extends Component {
     })
     .then((response) => response.json())
     .then((responseJson) => {
-      that.setState({ boards: responseJson }); 
+      let user = document.cookie.replace(/(?:(?:^|.*;\s*)name\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+      that.setState({ boards: responseJson,
+                      username: user }); 
     })
     .catch((error) => {
       console.error(error);
@@ -45,10 +48,10 @@ class Boards extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header userid={this.state.userid}/>
         <div id="mainbody">
           <div id="welcome">
-            <h1>Welcome [USERNAME HERE]</h1>
+            <h1>Welcome {this.state.username}</h1>
           </div>
           <AddBoard authorid={this.state.userid} username={this.state.username} action={this.boardHandler}/>
           <div>

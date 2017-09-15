@@ -7,7 +7,7 @@ class Header extends Component {
       <div id="taskbar">
         <ul id="leftTaskBarList">
           <li>
-            <Link to="/boards">
+            <Link to={`/boards/${this.props.userid}`}>
               <button type="button" id="boardTaskBar">
                 <img src={require('../images/boards.png')} alt="boards"/>
                 Boards

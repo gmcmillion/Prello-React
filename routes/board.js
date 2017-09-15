@@ -36,8 +36,8 @@ router.get('/cards/:lid', function(req, res, next) {
 // POST a new list
 router.post('/newlist', function(req, res) {	
   const query = {
-    text: 'INSERT INTO lists(listname, boardid) VALUES($1, $2) RETURNING *',
-    values: [req.body.listName, req.body.boardid]
+    text: 'INSERT INTO lists(listname, boardid, listauthor) VALUES($1, $2, $3) RETURNING *',
+    values: [req.body.listName, req.body.boardid, req.body.listauthor]
   }
   currentClient.query(query, (err, result)=> {
     if (err) {

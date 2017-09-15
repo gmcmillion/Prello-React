@@ -15,6 +15,7 @@ router.post('/register', function(req, res) {
     } else {
       //Sets a cookie with the users info
       // console.log('USER INFO: '+JSON.stringify(result.rows[0]));
+      res.cookie('name', result.rows[0].username);
       req.session.user = result.rows[0];
       res.send(result.rows[0]);
     }
@@ -39,6 +40,7 @@ router.post('/login', function(req, res) {
         if(result.rows[0].password == req.body.password) {
           // console.log("MATCHES: "+JSON.stringify(result.rows[0]));
           //Sets a cookie with the users info
+          res.cookie('name', result.rows[0].username);
           req.session.user = result.rows[0];
           res.send(result.rows[0]);
         } else {

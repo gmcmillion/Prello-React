@@ -39,7 +39,8 @@ class ShowMenu extends Component {
       },
       body: JSON.stringify({
         listName: this.state.listValue,
-        boardid: this.props.boardid
+        boardid: this.props.boardid,
+        listauthor: this.props.user
       })
     })
     .then((response) => response.json())

@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import '../styles/board.css';
 import Header from './header';
-import CardModal from './card_modal';
 import ShowMenu from './show_menu';
 import Lists from './lists';
+/* eslint-disable */
 
 class Board extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lists: []
+      lists: [],
+      username: ''
     }
 
     this.listHandler = this.listHandler.bind(this);
@@ -27,7 +28,9 @@ class Board extends Component {
     })
     .then((response) => response.json())
     .then((responseJson) => {
-      that.setState({ lists: responseJson }); 
+      let user = document.cookie.replace(/(?:(?:^|.*;\s*)name\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+      that.setState({ lists: responseJson,
+                      username: user }); 
     })
     .catch((error) => {
       console.error(error);
@@ -44,8 +47,8 @@ class Board extends Component {
   render() {	
     return (
       <div id="body">
-        <Header />
-        <ShowMenu boardid={this.props.match.params.bid} action={this.listHandler}/>
+        <Header userid={this.state.userid}/>
+        <ShowMenu boardid={this.props.match.params.bid} action={this.listHandler} user={this.state.username}/>
         <div id="Listdiv">
           <ul id="list">
             {
@@ -57,8 +60,7 @@ class Board extends Component {
               )
             }
           </ul>
-        </div> 
-        <CardModal />  
+        </div>  
       </div>
     );
   }

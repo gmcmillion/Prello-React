@@ -30,8 +30,8 @@ app.use(sessions({
 	secret: 'eg[isfd-8yF9-7w2315df{}+Ijsli;;to8',
 	duration: 30 * 60 * 1000,
 	activeDuration: 5 * 60 * 1000,
-	httpOnly: true,   //prevents browser JS from accessing cookies
-	secure: true,     //ensures cookies are only used over HTTPS
+	// httpOnly: true,   //prevents browser JS from accessing cookies
+	// secure: true,     //ensures cookies are only used over HTTPS
 	ephemeral: true   //deletes the cookie when the browser is closed
 }));
 
@@ -39,9 +39,7 @@ app.use(sessions({
 app.use(function(req, res, next) {
   // console.log(req.session);
   // console.log('SESSIONS: '+JSON.stringify(req.session));
-  
 	if (req.session && req.session.user) {
-    // console.log('1');
 		const query = {
 			text: 'SELECT * FROM users WHERE username = $1', 
 			values: [req.session.user.username]
@@ -51,7 +49,6 @@ app.use(function(req, res, next) {
 				console.log(err);
 			} else {
 				if(result.rows.length != 0) {
-          // console.log('2: '+JSON.stringify(result.rows[0]));
 					req.user = result.rows[0];
 					delete req.user.password; 			    //delete the password from the session
 					req.session.user = result.rows[0];  //refresh the session value
@@ -67,16 +64,15 @@ app.use(function(req, res, next) {
   
 });
 
-/*
 //Reset session when user logs out
 app.get('/logout', function(req, res) {
+	console.log('LOG OUT');
 	//Reset the session
 	req.session.reset();
 	
 	//Redirect to homepage
 	res.redirect('/');
 });
-*/
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
