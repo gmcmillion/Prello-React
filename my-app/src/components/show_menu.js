@@ -30,7 +30,7 @@ class ShowMenu extends Component {
     this.toggleMenu();
 
     //Post new list
-    // let that = this;
+    let that = this;
     fetch('http://localhost:3000/board/newlist', {
       method: 'POST',
       headers: {
@@ -44,18 +44,11 @@ class ShowMenu extends Component {
     })
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log(responseJson);
-    
-      // that.props.action(responseJson);   //Update parent state with response
+      that.props.action(responseJson);   //Update parent state with response
     })
     .catch((error) => {
       console.error(error);
     });
-    this.resetForm();
-  }
-
-  resetForm = () => { 
-    this.setState({ value: '' });
   }
 
   render() {	

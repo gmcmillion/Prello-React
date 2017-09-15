@@ -5,7 +5,7 @@ class Card extends Component {
     return (
       <li>
         <button className="cardBtn"> 
-          <p>[SOME DESCRIPTION]</p>
+          <p>{this.props.cardname}</p>
           <div className="lab-colors"></div>
         </button>
       </li>

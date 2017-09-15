@@ -17,7 +17,7 @@ var currentClient = new function() {
                 client.query('CREATE TABLE IF NOT EXISTS users(id SERIAL PRIMARY KEY, username VARCHAR(100), password VARCHAR(100), email VARCHAR(100))');
                 client.query('CREATE TABLE IF NOT EXISTS boards(id SERIAL PRIMARY KEY, boardname VARCHAR(100), boardauthor VARCHAR(100), boardauthorid VARCHAR(100))');                
                 client.query('CREATE TABLE IF NOT EXISTS lists(id SERIAL PRIMARY KEY, listname VARCHAR(100), listauthor VARCHAR(100), boardid VARCHAR(100))');                
-                
+                client.query('CREATE TABLE IF NOT EXISTS cards(id SERIAL PRIMARY KEY, cardname VARCHAR(100), cardauthor VARCHAR(100), listid VARCHAR(100))');                
             }
         });
     }
