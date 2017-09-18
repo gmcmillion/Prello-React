@@ -48,11 +48,6 @@ router.post('/newlist', function(req, res) {
   });
 });
 
-// DELETE a list
-router.delete('/:lid', function(req, res) {
-  console.log('DELETE LIST');
-});
-
 // POST a new card
 router.post('/newcard', function(req, res) {	
   const query = {
@@ -100,14 +95,39 @@ router.get('/labels/:cid', function(req, res){
   });
 });
 
+// DELETE a list
+router.delete('/deletelist/:lid', function(req, res) {
+  const query = {
+		text: 'DELETE FROM lists WHERE id = $1',
+		values: [req.params.lid]
+	}	
+	currentClient.query(query, (err, result)=> {
+		if (err) {
+			console.log(err);
+		} else {
+			//Also DELETE any cards associated with this deleted list
+			const query = {
+				text: 'DELETE FROM cards WHERE listid = $1',
+				values: [req.params.lid]
+			}	
+			currentClient.query(query, (err, result)=> {
+				if (err) {
+					console.log(err);
+				} else {
+					res.send(result);
+				}
+			});
+		}
+	});
+});
+
+
 // DELETE a card
 router.delete('/deletecard/:cid', function(req, res) {
-  //Delete query
 	const query = {
 		text: 'DELETE FROM cards WHERE id = $1',
 		values: [req.params.cid]
 	}	
-	//Run query
 	currentClient.query(query, (err, result)=> {
 		if (err) {
 			console.log(err);

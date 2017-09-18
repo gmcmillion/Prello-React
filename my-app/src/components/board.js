@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import '../styles/board.css';
 import Header from './header';
 import ShowMenu from './show_menu';
@@ -14,6 +15,7 @@ class Board extends Component {
     }
 
     this.listHandler = this.listHandler.bind(this);
+    this.handleDeleteList = this.handleDeleteList.bind(this);
   }
 
   //Get all lists when components mounts
@@ -44,11 +46,38 @@ class Board extends Component {
     this.setState({lists: tempArray});
   }
 
+  // DELETE list
+  handleDeleteList(event) {
+    var value = event.target.value;
+    var that = this;
+    fetch(`http://localhost:3000/board/deletelist/${value}`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      var val = parseInt(value);  //Convert String to Number
+      const index = _.findIndex(that.state.lists, {id: val}); //Find index in array
+      let tempArray = that.state.lists.slice();   //Copy lists array
+      _.pullAt(tempArray, [index])                //Remove list out of array
+      that.setState({ lists: tempArray });        //Update state with new lists array
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  } 
+
   render() {	
     return (
       <div id="body">
         <Header userid={this.state.userid}/>
-        <ShowMenu boardid={this.props.match.params.bid} action={this.listHandler} user={this.state.username}/>
+        <ShowMenu 
+          boardid={this.props.match.params.bid} 
+          action={this.listHandler} 
+          user={this.state.username}/>
         <div id="Listdiv">
           <ul id="list">
             {
@@ -57,7 +86,8 @@ class Board extends Component {
                 key={list.id}
                 listid={list.id}
                 listname={list.listname}
-                user={this.state.username}/>
+                user={this.state.username}
+                deleteList={this.handleDeleteList}/>
               )
             }
           </ul>
