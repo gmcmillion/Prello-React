@@ -56,7 +56,8 @@ class Board extends Component {
               <Lists 
                 key={list.id}
                 listid={list.id}
-                listname={list.listname}/>
+                listname={list.listname}
+                user={this.state.username}/>
               )
             }
           </ul>

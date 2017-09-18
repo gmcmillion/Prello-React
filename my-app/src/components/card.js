@@ -10,6 +10,7 @@ class Card extends Component {
     };
 
     this.toggleCardModal = this.toggleCardModal.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   toggleCardModal() {
@@ -19,10 +20,21 @@ class Card extends Component {
     });
   }
 
+  // DELETE card
+  handleDelete(value) {
+    this.props.delete(this.props.cardid);
+  } 
+
   render() {		
     let cardModal;
     if(this.state.cardModalActive) {
-      cardModal = <CardModal cardName={this.props.cardname} action={this.toggleCardModal}/> 
+      cardModal = <CardModal 
+                    cardName={this.props.cardname} 
+                    action={this.toggleCardModal} 
+                    cardauthor={this.props.cardauthor}
+                    cardid={this.props.cardid}
+                    delete={this.handleDelete}
+                    /> 
     } else {
       cardModal = "";
     }

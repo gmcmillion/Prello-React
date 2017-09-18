@@ -549,6 +549,11 @@ button img{
   cursor: hand;
   border-radius: 4px;
 }
+
+#label-colors {
+  display: inline !important;
+}
+
 #green {
   background-color:#5ebc60;
 }

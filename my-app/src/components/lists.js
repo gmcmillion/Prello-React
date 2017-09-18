@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import Card from './card';
 import { CSSTransitionGroup } from 'react-transition-group';
 
@@ -14,6 +15,7 @@ class Lists extends Component {
     this.toggleMenu = this.toggleMenu.bind(this);
     this.handleCardChange = this.handleCardChange.bind(this);
     this.handleCardSubmit = this.handleCardSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.cardHandler = this.cardHandler.bind(this);
   }
 
@@ -67,7 +69,8 @@ class Lists extends Component {
       },
       body: JSON.stringify({
         cardname: this.state.cardValue,
-        listid: this.props.listid
+        listid: this.props.listid,
+        cardauthor: this.props.user
       })
     })
     .then((response) => response.json())
@@ -78,6 +81,28 @@ class Lists extends Component {
       console.error(error);
     });
   }
+
+    // DELETE card
+    handleDelete(value) {
+      var that = this;
+      fetch(`http://localhost:3000/board/deletecard/${value}`, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        const index = _.findIndex(that.state.cards, {id: value}); //Find index in array
+        let tempArray = that.state.cards.slice();   //Copy cards array
+        _.pullAt(tempArray, [index])                //Remove card out of array
+        that.setState({ cards: tempArray });        //Update state with new cards array
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    } 
 
   render() {		
     let cardMenu;
@@ -105,7 +130,9 @@ class Lists extends Component {
               <Card 
                 key={card.id}
                 cardid={card.id}
-                cardname={card.cardname}/>
+                cardname={card.cardname}
+                cardauthor={this.props.user}
+                delete={this.handleDelete}/>
               )
             }
             </ul>

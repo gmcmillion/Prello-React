@@ -50,14 +50,14 @@ router.post('/newlist', function(req, res) {
 
 // DELETE a list
 router.delete('/:lid', function(req, res) {
-  console.log('DELETE');
+  console.log('DELETE LIST');
 });
 
 // POST a new card
 router.post('/newcard', function(req, res) {	
   const query = {
-    text: 'INSERT INTO cards(cardname, listid) VALUES($1, $2) RETURNING *',
-    values: [req.body.cardname, req.body.listid]
+    text: 'INSERT INTO cards(cardname, listid, cardauthor) VALUES($1, $2, $3) RETURNING *',
+    values: [req.body.cardname, req.body.listid, req.body.cardauthor]
   }
   currentClient.query(query, (err, result)=> {
     if (err) {
@@ -66,6 +66,66 @@ router.post('/newcard', function(req, res) {
       res.send(result.rows[0]);
     }
   });
+});
+
+// POST a new label
+router.post('/newlabel/:cid', function(req, res) {	
+  console.log('NEWLABEL');
+
+  const query = {
+    text: 'INSERT INTO labels(color, cardid) VALUES($1, $2) RETURNING *',
+    values: [req.body.color, req.params.cid]
+  }
+  currentClient.query(query, (err, result)=> {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result.rows[0]);
+    }
+  });
+});
+
+// GET labels
+router.get('/labels/:cid', function(req, res){
+  const query = {
+    text: 'SELECT * FROM labels WHERE cardid = $1',
+    values: [req.params.cid]
+  }	
+  currentClient.query(query, (err, result)=> {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result.rows);
+    }
+  });
+});
+
+// DELETE a card
+router.delete('/deletecard/:cid', function(req, res) {
+  //Delete query
+	const query = {
+		text: 'DELETE FROM cards WHERE id = $1',
+		values: [req.params.cid]
+	}	
+	//Run query
+	currentClient.query(query, (err, result)=> {
+		if (err) {
+			console.log(err);
+		} else {
+			//Also DELETE any labels associated with this deleted card
+			const query = {
+				text: 'DELETE FROM labels WHERE cardid = $1',
+				values: [req.params.cid]
+			}	
+			currentClient.query(query, (err, result)=> {
+				if (err) {
+					console.log(err);
+				} else {
+					res.send(result);
+				}
+			});
+		}
+	});
 });
 
 module.exports = router;
