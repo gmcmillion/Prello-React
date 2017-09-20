@@ -11,7 +11,8 @@ class Board extends Component {
     super(props);
     this.state = {
       lists: [],
-      username: ''
+      username: '',
+      boardname: ''
     }
 
     this.listHandler = this.listHandler.bind(this);

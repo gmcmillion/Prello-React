@@ -1,7 +1,6 @@
 #body {
   width: 100%;
   height: 1000px;
-  /* height: 100%; */
   margin: 0;
   background-image: url(../images/abstract-mosaic-background.png);
   background-repeat: no-repeat;
@@ -325,12 +324,15 @@ button img{
   color: #4d4d4d;
   margin-bottom: 20px;
 }
+
 .addComment {
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
+
 .addComment input {
   margin-top: 5px;
 }
+
 .addComment input[type=text] {
   height: 50px;
   width: 400px;
@@ -340,14 +342,6 @@ button img{
   border: none;
   box-shadow: 0 1px #cccccc;
   font-size: 15px;
-}
-.addComment button {
-  display:block;
-  background-color: #e2e4e6;
-  width: 80px;
-  height: 40px;
-  margin: 10px 0;
-  color: #8c8c8c;
 }
 
 #comments {
@@ -484,6 +478,8 @@ button img{
 
 #card-name p {
   margin-top: 0;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 #delete-card-btn {
@@ -550,27 +546,31 @@ button img{
   border-radius: 4px;
 }
 
-#label-colors {
+.label-colors-ind {
   display: inline !important;
+  width: 50px !important;
+  height: 15px !important;
+  border-radius: 4px !important;
+  margin: 2px 5px 2px 0px !important;
 }
 
 #green {
-  background-color:#5ebc60;
+  background-color:#5ebc60 !important;
 }
 #yellow {
-  background-color:#f2d44b;
+  background-color:#f2d44b !important;
 }
 #orange {
-  background-color:#ffa95d;
+  background-color:#ffa95d !important;
 }
 #red {
-  background-color:#ec594d;
+  background-color:#ec594d !important;
 }
 #purple {
-  background-color:#c47ad9;
+  background-color:#c47ad9 !important;
 }
 #blue {
-  background-color:#007bb9;
+  background-color:#007bb9 !important;
 }
 
 #pos-list-dropdown {
@@ -640,7 +640,7 @@ button img{
 
 #author {
   color: #4d4d4d;
-  margin:3px;
+  margin-top:3px;
   font-size: 16px;
   background-color: #ffffff;
   display:inline-block;
@@ -648,10 +648,6 @@ button img{
   border-radius: 4px;
   box-shadow: 0 1px #cccccc;
   font-weight: bold;
-}
-
-#author-div h3 {
-  display: inline;
 }
 
 table {

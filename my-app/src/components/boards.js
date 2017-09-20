@@ -66,7 +66,8 @@ class Boards extends Component {
                     <NewBoard 
                       key={board.id} 
                       boardid={board.id}
-                      boardname={board.boardname}/>
+                      boardname={board.boardname}
+                      />
                     )
                 }
               </ul>

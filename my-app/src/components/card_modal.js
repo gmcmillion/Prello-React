@@ -33,6 +33,8 @@ class CardModal extends Component {
 
   // POST a new label
   labelHandler(event) {
+    this.toggleLabelDropdown(); //Close dropdown
+
     var that = this;
     fetch(`http://localhost:3000/board/newlabel/${this.props.cardid}`, {
       method: 'POST',
@@ -99,25 +101,30 @@ class CardModal extends Component {
             <div>
               <h3 id="description">Edit the description...</h3>
             </div>
+
+
             <div className="addComment">
               <h3>Comments:</h3>
               {/* To hold comments */}
               <div id="comments"></div>
               <h4>Add Comment:</h4>
               <form id="comment-form">
-                <input type="text" placeholder="Write a comment..." id="comm"/>
+                <input type="text" placeholder="Write a comment..."/>
+                <input type="submit" id="add-comment-button"/>
               </form>
-              <button type="button" id="add-comment-button">Send</button>
             </div>
+
+
             <div id="labels">
               <h3>Labels:</h3>
-              <div id="label-colors">
+              <ul id="label-colors">
                 {this.state.labels.map((label, index) =>
                   <Label key={index}
                     color={label.color}/>
                 )}
-              </div>
+              </ul>
             </div>
+            <br />
             <div id="author-div">
               <h3>Author:</h3>
               <p id="author">{this.props.cardauthor}</p>
