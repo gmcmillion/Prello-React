@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
 
 class Register extends Component {
   constructor(props) {
@@ -6,9 +7,11 @@ class Register extends Component {
     this.state = {
       id: '',
       username: '',
+      userid: '',
       email: '',
       password: '',
       confirmPassword: '',
+      fireRedirect: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -27,7 +30,7 @@ class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
+    const that = this;
     fetch('http://localhost:3000/users/register', {
       method: 'POST',
       headers: {
@@ -42,14 +45,19 @@ class Register extends Component {
     })
     .then((response) => response.json())
     .then((responseJson) => {
-      window.location.href = `/boards/${responseJson.id}`;
+      // window.location.href = `/boards/${responseJson.id}`;
+      that.setState({ 
+        userid: responseJson.id,
+        fireRedirect: true
+      });
     })
     .catch((error) => {
       console.error(error);
     });
   }
 
-  render() {		
+  render() {	
+    const { fireRedirect } = this.state;	
     return (
       <div id="createAccount">
         <h1>Create a Prello Account</h1>
@@ -100,6 +108,9 @@ class Register extends Component {
 
           <input id="register-btn" type="submit" value="Create New Account"></input>
         </form>
+        {fireRedirect && (
+          <Redirect to={`/boards/${this.state.userid}`}/>
+        )}
       </div>
     );
   }

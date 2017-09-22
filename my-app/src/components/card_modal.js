@@ -53,16 +53,16 @@ class CardModal extends Component {
     })
     .then((response) => response.json())
     .then((responseJson) => {
+      that.props.colorMaker(responseJson.color);  //For card mini color labels
       var tempArray = that.state.labels.slice();
       tempArray.push(responseJson);
-      this.setState({labels: tempArray});
+      that.setState({labels: tempArray});
     })
     .catch((error) => {
       console.error(error);
     });
   }
 
-  
   componentDidMount() {
     var that = this;
     // GET all labels for selected card
@@ -120,7 +120,7 @@ class CardModal extends Component {
     .then((responseJson) => {
       var tempArray = that.state.comments.slice();
       tempArray.push(responseJson);
-      this.setState({comments: tempArray});
+      that.setState({comments: tempArray});
     })
     .catch((error) => {
       console.error(error);

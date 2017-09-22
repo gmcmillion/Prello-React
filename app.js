@@ -61,7 +61,6 @@ app.use(function(req, res, next) {
 	} else {
 		next();
   }
-  
 });
 
 //Reset session when user logs out
@@ -69,7 +68,8 @@ app.get('/logout', function(req, res) {
 	console.log('LOG OUT');
 	//Reset the session
 	req.session.reset();
-	
+	res.cookie('name', '');
+
 	//Redirect to homepage
 	res.redirect('/');
 });

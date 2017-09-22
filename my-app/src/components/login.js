@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
 
 class Login extends Component {
   constructor(props) {
@@ -54,7 +54,7 @@ class Login extends Component {
   }
 
   render() {		
-    const { fireRedirect } = this.state
+    const { fireRedirect } = this.state;
     return (
       <div id="login">
         <h1>Log in to Prello</h1>
@@ -91,7 +91,6 @@ class Login extends Component {
         {fireRedirect && (
           <Redirect to={`/boards/${this.state.userid}`}/>
         )}
-        
       </div>
     );
   }

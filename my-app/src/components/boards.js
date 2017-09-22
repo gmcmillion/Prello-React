@@ -67,8 +67,8 @@ class Boards extends Component {
                       key={board.id} 
                       boardid={board.id}
                       boardname={board.boardname}
-                      />
-                    )
+                    />
+                  )
                 }
               </ul>
             </div>

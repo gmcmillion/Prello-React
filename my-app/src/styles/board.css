@@ -246,6 +246,7 @@ button img{
 }
 
 .cardBtn p {
+  margin: 5px 3px 7px 3px;
   color: #4d4d4d;
   overflow: scroll;
   word-wrap: break-word;

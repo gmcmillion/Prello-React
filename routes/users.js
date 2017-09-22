@@ -2,19 +2,21 @@ var express = require('express');
 var router = express.Router();
 var client = require('../postgres.js');
 var currentClient = client.getClient();
+var passwordHash = require('password-hash');
 
 //Register user, and redirect to boards
 router.post('/register', function(req, res) {
+  //Hash password
+  var hashedPassword = passwordHash.generate(req.body.password);
   const query = {
     text: 'INSERT INTO users(username, password, email) VALUES($1, $2, $3) RETURNING *',
-    values: [req.body.username, req.body.password, req.body.email]
+    values: [req.body.username, hashedPassword, req.body.email]
   }
   currentClient.query(query, (err, result)=> {
     if (err) {
       console.log(err);
-    } else {
+    } else {      
       //Sets a cookie with the users info
-      // console.log('USER INFO: '+JSON.stringify(result.rows[0]));
       res.cookie('name', result.rows[0].username);
       req.session.user = result.rows[0];
       res.send(result.rows[0]);
@@ -22,7 +24,7 @@ router.post('/register', function(req, res) {
   });
 });
 
-//Register user, and redirect to boards
+//Login user, and redirect to boards
 router.post('/login', function(req, res) {
   const query = {
 		text: 'SELECT * FROM users WHERE username = $1',
@@ -37,8 +39,8 @@ router.post('/login', function(req, res) {
 				res.redirect('/');
       } else {
         //Verify hashed password matches
-        if(result.rows[0].password == req.body.password) {
-          // console.log("MATCHES: "+JSON.stringify(result.rows[0]));
+				if(passwordHash.verify(req.body.password, result.rows[0].password))
+				{
           //Sets a cookie with the users info
           res.cookie('name', result.rows[0].username);
           req.session.user = result.rows[0];
