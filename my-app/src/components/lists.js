@@ -132,7 +132,8 @@ class Lists extends Component {
                 cardid={card.id}
                 cardname={card.cardname}
                 cardauthor={this.props.user}
-                delete={this.handleDelete}/>
+                delete={this.handleDelete}
+                user={this.props.user}/>
               )
             }
             </ul>

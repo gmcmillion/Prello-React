@@ -34,6 +34,7 @@ class Card extends Component {
                     cardauthor={this.props.cardauthor}
                     cardid={this.props.cardid}
                     delete={this.handleDelete}
+                    user={this.props.user}
                     /> 
     } else {
       cardModal = "";

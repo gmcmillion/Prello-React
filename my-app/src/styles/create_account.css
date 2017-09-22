@@ -22,7 +22,19 @@ label {
   font-family: "jaf-facitweb","Helvetica Neue",Arial,sans-serif;
 }
 
-input[type=text], input[type=email], input[type=password] {
+#login input[type=text], input[type=email], input[type=password] {
+  display: block;
+  margin: 20px 0px 20px 0px;
+  height: 50px;
+  width: 400px;
+  padding: 10px;
+  background-color: #fafec5;
+  border-radius: 5px;
+  border: 1px solid #4D4D4D;
+  font-size: 20px;
+}
+
+#createAccount input[type=text], input[type=email], input[type=password] {
   display: block;
   margin: 20px 0px 20px 0px;
   height: 50px;

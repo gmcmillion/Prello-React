@@ -20,7 +20,7 @@ class Boards extends Component {
   //Get all boards when components mounts
   componentDidMount() {
     var that = this;
-    fetch('http://localhost:3000/boards/listofboards', {
+    fetch(`http://localhost:3000/boards/${this.state.userid}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

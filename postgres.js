@@ -19,7 +19,7 @@ var currentClient = new function() {
                 client.query('CREATE TABLE IF NOT EXISTS lists(id SERIAL PRIMARY KEY, listname VARCHAR(100), listauthor VARCHAR(100), boardid VARCHAR(100))');                
                 client.query('CREATE TABLE IF NOT EXISTS cards(id SERIAL PRIMARY KEY, cardname VARCHAR(100), cardauthor VARCHAR(100), listid VARCHAR(100))');     
                 client.query('CREATE TABLE IF NOT EXISTS labels(id SERIAL PRIMARY KEY, color VARCHAR(100), cardid VARCHAR(100))');  
-                client.query('CREATE TABLE IF NOT EXISTS comments(id SERIAL PRIMARY KEY, comment VARCHAR(100), commentauthor VARCHAR(100), commentdate VARCHAR(100))');              
+                client.query('CREATE TABLE IF NOT EXISTS comments(id SERIAL PRIMARY KEY, cardid VARCHAR(100), comment VARCHAR(100), commentauthor VARCHAR(100), commentdate VARCHAR(100))');              
             }
         });
     }

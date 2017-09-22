@@ -4,9 +4,10 @@ var client = require('../postgres.js');
 var currentClient = client.getClient();
 
 //GET boards listing
-router.get('/listofboards', function(req, res, next) {
+router.get('/:uid', function(req, res, next) {
 	const query = {
-		text: 'SELECT * FROM boards'
+		text: 'SELECT * FROM boards WHERE boardauthorid = $1',
+		values: [req.params.uid]
 	}	
 	currentClient.query(query, (err, result)=> {
 		if (err) {

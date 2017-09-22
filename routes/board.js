@@ -65,11 +65,24 @@ router.post('/newcard', function(req, res) {
 
 // POST a new label
 router.post('/newlabel/:cid', function(req, res) {	
-  console.log('NEWLABEL');
-
   const query = {
     text: 'INSERT INTO labels(color, cardid) VALUES($1, $2) RETURNING *',
     values: [req.body.color, req.params.cid]
+  }
+  currentClient.query(query, (err, result)=> {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result.rows[0]);
+    }
+  });
+});
+
+// POST a new comment
+router.post('/newcomment/:cid', function(req, res) {	
+  const query = {
+    text: 'INSERT INTO comments(comment, cardid, commentauthor, commentdate) VALUES($1, $2, $3, $4) RETURNING *',
+    values: [req.body.comment, req.params.cid, req.body.commentauthor, req.body.commentdate]
   }
   currentClient.query(query, (err, result)=> {
     if (err) {
@@ -84,6 +97,21 @@ router.post('/newlabel/:cid', function(req, res) {
 router.get('/labels/:cid', function(req, res){
   const query = {
     text: 'SELECT * FROM labels WHERE cardid = $1',
+    values: [req.params.cid]
+  }	
+  currentClient.query(query, (err, result)=> {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result.rows);
+    }
+  });
+});
+
+// GET comments
+router.get('/comments/:cid', function(req, res){
+  const query = {
+    text: 'SELECT * FROM comments WHERE cardid = $1',
     values: [req.params.cid]
   }	
   currentClient.query(query, (err, result)=> {
@@ -114,13 +142,13 @@ router.delete('/deletelist/:lid', function(req, res) {
 				if (err) {
 					console.log(err);
 				} else {
-					res.send(result);
+          res.send(result);
+          //TODO: delete labels and comments for each card in the list
 				}
 			});
 		}
 	});
 });
-
 
 // DELETE a card
 router.delete('/deletecard/:cid', function(req, res) {
@@ -141,7 +169,18 @@ router.delete('/deletecard/:cid', function(req, res) {
 				if (err) {
 					console.log(err);
 				} else {
-					res.send(result);
+          //Also DELETE any comments associated with this deleted card
+          const query = {
+            text: 'DELETE FROM comments WHERE cardid = $1',
+            values: [req.params.cid]
+          }	
+          currentClient.query(query, (err, result)=> {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          });
 				}
 			});
 		}

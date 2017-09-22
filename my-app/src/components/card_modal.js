@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
 import { CSSTransitionGroup } from 'react-transition-group';
 import Label from './label';
+import Comment from './comment';
 
 class CardModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       labelDropdownActive: false,
-      labels: []
+      labels: [],
+      comments: [],
+      commentValue: ''
     };
 
     this.toggleLabelDropdown = this.toggleLabelDropdown.bind(this);
     this.handleClose = this.handleClose.bind(this);  
     this.handleDelete = this.handleDelete.bind(this);   
     this.labelHandler = this.labelHandler.bind(this); 
+    this.commentHandler = this.commentHandler.bind(this);
+    this.handleCommentChange = this.handleCommentChange.bind(this);
   }
 
   toggleLabelDropdown() {
@@ -57,9 +62,10 @@ class CardModal extends Component {
     });
   }
 
-  // GET all labels for selected card
+  
   componentDidMount() {
     var that = this;
+    // GET all labels for selected card
     fetch(`http://localhost:3000/board/labels/${this.props.cardid}`, {
       method: 'GET',
       headers: {
@@ -74,6 +80,62 @@ class CardModal extends Component {
     .catch((error) => {
       console.error(error);
     });
+
+    // GET all comments for a specific card
+    fetch(`http://localhost:3000/board/comments/${this.props.cardid}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      that.setState({ comments: responseJson }); 
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
+  // POST a new comment
+  commentHandler(event) {
+    event.preventDefault();
+    var date = new Date();
+
+    var that = this;
+    fetch(`http://localhost:3000/board/newcomment/${this.props.cardid}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        comment: that.state.commentValue,
+        commentauthor: that.props.user,
+        commentdate: date
+      })
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      var tempArray = that.state.comments.slice();
+      tempArray.push(responseJson);
+      this.setState({comments: tempArray});
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+    //TODO: Reset form on submit
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.setState({commentValue: ''});
+  }
+
+  handleCommentChange(event) {
+    const value = event.target.type === 'text' ? event.target.value : event.target.value;
+    this.setState({commentValue: value});
   }
 
   render() {		
@@ -101,20 +163,33 @@ class CardModal extends Component {
             <div>
               <h3 id="description">Edit the description...</h3>
             </div>
-
-
             <div className="addComment">
               <h3>Comments:</h3>
-              {/* To hold comments */}
-              <div id="comments"></div>
-              <h4>Add Comment:</h4>
-              <form id="comment-form">
-                <input type="text" placeholder="Write a comment..."/>
+              <div id="comments">
+                <table id='comment-table'>
+                  <thead>
+                    <tr id='table-header'>
+                      <th>Comment</th>
+                      <th>Author</th>
+                      <th>Date &amp; Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.comments.map((comment, index) =>
+                    <Comment 
+                      key={index}
+                      comment={comment.comment}
+                      commentauthor={comment.commentauthor}
+                      commentdate={comment.commentdate}/>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              <form id="comment-form" onSubmit={this.commentHandler}>
+                <input type="text" placeholder="Write a comment..." onChange={this.handleCommentChange} value={this.state.commentValue}/>
                 <input type="submit" id="add-comment-button"/>
               </form>
             </div>
-
-
             <div id="labels">
               <h3>Labels:</h3>
               <ul id="label-colors">
@@ -126,7 +201,7 @@ class CardModal extends Component {
             </div>
             <br />
             <div id="author-div">
-              <h3>Author:</h3>
+              <h3>Card Author:</h3>
               <p id="author">{this.props.cardauthor}</p>
             </div> 
           </div>

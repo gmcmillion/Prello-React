@@ -67,7 +67,6 @@ class ShowMenu extends Component {
     return (
       <div id="board-header">
         <p id="boardName">[INSERT BOARD NAME]</p>
-        
         <button type="button" id="show-menu-btn">Show Menu</button>
         <div id="mySidenav" className="sidenav">
           {/* <a href="javascript:void(0)" className="close-btn" onClick="closeNav()">&times;</a> */}
@@ -78,8 +77,7 @@ class ShowMenu extends Component {
                 <input type="text" id="newUserInput" autoComplete="off" placeholder="Add user email..."/>
                 <button type="submit" id="user-submit-btn">Submit</button>
               </form>
-            </div>
-          <a href="">Activity</a>
+            </div>  
         </div> 
         {/* Add new list dropdown */}
         <div id="pos-list-dropdown">

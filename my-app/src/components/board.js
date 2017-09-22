@@ -12,6 +12,7 @@ class Board extends Component {
     this.state = {
       lists: [],
       username: '',
+      userid: '',
       boardname: ''
     }
 

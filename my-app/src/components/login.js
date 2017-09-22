@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router'
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      userid: '',
+      password: '',
+      fireRedirect: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -24,7 +27,7 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
+    const that = this;
     fetch('http://localhost:3000/users/login', {
       credentials: 'include',
       method: 'POST',
@@ -39,7 +42,11 @@ class Login extends Component {
     })
     .then((response) => response.json())
     .then((responseJson) => {
-      window.location.href = `/boards/${responseJson.id}`;
+      // window.location.href = `/boards/${responseJson.id}`;
+      that.setState({ 
+        userid: responseJson.id,
+        fireRedirect: true
+      });
     })
     .catch((error) => {
       console.error(error);
@@ -47,6 +54,7 @@ class Login extends Component {
   }
 
   render() {		
+    const { fireRedirect } = this.state
     return (
       <div id="login">
         <h1>Log in to Prello</h1>
@@ -80,6 +88,10 @@ class Login extends Component {
           
           <p id="forgotpass">Forgot your password? <a href="board.html">Reset it.</a></p>
         </form>
+        {fireRedirect && (
+          <Redirect to={`/boards/${this.state.userid}`}/>
+        )}
+        
       </div>
     );
   }
