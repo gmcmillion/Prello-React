@@ -28,10 +28,15 @@ class Card extends Component {
   } 
 
   //Makes mini color labels for cards
-  colorMaker(color) { 
+  colorMaker(colorResponse) { 
+    var labelObject = {
+      cardid: colorResponse.cardid,
+      color: colorResponse.color,
+      id: colorResponse.id
+    }
     var tempArray = this.state.labelColors.slice();
-    tempArray.push(color);
-    this.setState({labelColors: tempArray});  
+    tempArray.push(labelObject);
+    this.setState({ labelColors: tempArray });  
   }
 
   componentDidMount() {

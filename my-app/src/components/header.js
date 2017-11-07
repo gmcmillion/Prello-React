@@ -19,7 +19,7 @@ class Header extends Component {
         <ul id="rightTaskBarList">
           <li><button type="button" id="firstButton">GM</button></li>
           <li>
-            <Link to="/logout">
+            <Link to="/">
               <button type="button" id="logout-btn">Log Out</button>
             </Link>
           </li>

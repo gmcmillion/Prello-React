@@ -53,7 +53,7 @@ class CardModal extends Component {
     })
     .then((response) => response.json())
     .then((responseJson) => {
-      that.props.colorMaker(responseJson.color);  //For card mini color labels
+      that.props.colorMaker(responseJson);  //For card mini color labels
       var tempArray = that.state.labels.slice();
       tempArray.push(responseJson);
       that.setState({labels: tempArray});
